@@ -1,101 +1,61 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="ProjectInquiryApp"> <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Inquiry</title>
-    <link rel="stylesheet" href="design.css"> 
-    </head>
-<body ng-controller="InquiryController"> <h2>Start Your Project Inquiry</h2>
-    <p>Please fill out the details below to receive a personalized proposal.</p>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Client Form</title>
+    <link rel="stylesheet" href="design.css" />
+</head>
 
-    <form name="inquiryForm" ng-submit="submitInquiry(inquiryForm.$valid)" novalidate>
-        
-        <h3>Contact Details</h3>
-        
-        <label for="contact-name">Your Full Name *</label> 
-        <input type="text" id="contact-name" name="contact_name" ng-model="formData.contact_name" required placeholder="John Doe">
+<body>
+    <div class="container">
+        <h2 class="title">Client Information Form</h2>
 
-        <label for="client-email">Business Email *</label>
-        <input type="email" id="client-email" name="email" ng-model="formData.email" required placeholder="name@company.com">
-        
-        <label for="client-phone">Direct Phone Number (Default +91)</label>
-        <div class="phone-group">
-            <span class="phone-code">+91</span>
-            <input type="tel" id="client-phone" name="phone" ng-model="formData.phone" placeholder="e.g., 9876543210" 
-                   pattern="[0-9]{10}" title="Ten digits number" required>
-        </div>
-        
-        <label for="company-name">Company Name *</label>
-        <input type="text" id="company-name" name="company_name" ng-model="formData.company_name" required placeholder="Acme Corp.">
+        <form id="clientForm" novalidate>
+            
+            <div class="input-group">
+                <input type="text" id="fullName" required>
+                <label>Full Name</label>
+                <p class="error" id="nameError"></p>
+            </div>
 
-        <h3>Project Scope</h3>
+            <div class="input-group">
+                <input type="email" id="email" required>
+                <label>Email</label>
+                <p class="error" id="emailError"></p>
+            </div>
 
-        <label for="service-focus">What are all the required services? *</label>
-        <select id="service-focus" name="services_required" ng-model="formData.services_required" multiple size="4" required>
-            <option value="Web-Design">Website Design & Development</option>
-            <option value="SEO-Marketing">SEO & Content Marketing</option>
-            <option value="Branding-UI">Branding & UI/UX Design</option>
-            <option value="Custom-Software">Custom Software/App Development</option>
-            <option value="Maintenance">Ongoing Maintenance/Support</option>
-        </select>
-        <small style="display: block; margin-top: -10px; margin-bottom: 20px; color: #888;">Hold CTRL (or CMD) to select multiple options.</small>
-        
-        <label for="budget-min">Target Project Budget ($) *</label>
-        <input type="number" id="budget-min" name="budget_min" ng-model="formData.budget_min" min="1000" step="500" required placeholder="Minimum e.g., 5000">
-      
-        <label for="details-objective">Project Brief / Objectives *</label>
-        <textarea id="details-objective" name="details_objective" ng-model="formData.details_objective" rows="5" required
-                  placeholder="Describe your challenge and what you hope to achieve."></textarea>
-                  
-        <h3>Advanced Options</h3>
+            <div class="input-group">
+                <input type="text" id="contact" required maxlength="10">
+                <label>Contact Number</label>
+                <p class="error" id="contactError"></p>
+            </div>
 
-        <div class="toggle-container">
-            <label>Enable Urgent Priority?</label>
-            <label class="switch"> 
-                <input type="checkbox" name="urgent_priority" ng-model="formData.urgent_priority">
-                <span class="slider"></span>
-            </label>
-        </div>
-        
-        <hr style="border: 0; border-top: 1px solid #eee;">
+            <div class="input-group">
+                <label class="select-label">Select Skills</label>
+                <select id="skills" multiple required>
+                    <option value="HTML">HTML</option>
+                    <option value="CSS">CSS</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="Angular">Angular</option>
+                    <option value="Python">Python</option>
+                </select>
+                <p class="error" id="skillsError"></p>
+            </div>
 
-        <div style="margin-bottom: 20px;">
-            <input type="checkbox" id="terms-agree" name="terms_agreed" ng-model="formData.terms_agreed" required style="width: auto;">
-            <label for="terms-agree" style="display: inline; font-weight: normal; margin-left: 5px;">
-                I agree to the <a href="/terms-link" target="_blank" style="color: var(--primary-color); text-decoration: none;">Terms and Conditions</a> *
-            </label>
-        </div>
-        
-        <button type="submit">
-            SUBMIT INQUIRY
-        </button>
-    </form>
-    
-    <div ng-if="submissionSuccess" id="submitted-data-container" style="margin-top: 50px; padding: 20px; border: 1px solid #007bff; border-radius: 8px; background-color: var(--secondary-color);">
-        <h3 style="border-bottom: 2px solid #007bff;">✅ Submission Successful!</h3>
-        <p>Thank you, **{{submittedData.contact_name}}**! Your project details are:</p>
-        
-        <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
-            <tr style="border-bottom: 1px dashed #ccc;"><td style="padding: 5px 0; font-weight: 600;">Name:</td><td style="padding: 5px 0;">{{submittedData.contact_name}}</td></tr>
-            <tr style="border-bottom: 1px dashed #ccc;"><td style="padding: 5px 0; font-weight: 600;">Email:</td><td style="padding: 5px 0;">{{submittedData.email}}</td></tr>
-            <tr style="border-bottom: 1px dashed #ccc;"><td style="padding: 5px 0; font-weight: 600;">Company:</td><td style="padding: 5px 0;">{{submittedData.company_name}}</td></tr>
-            <tr style="border-bottom: 1px dashed #ccc;"><td style="padding: 5px 0; font-weight: 600;">Services:</td><td style="padding: 5px 0;">{{submittedData.services_required.join(', ') || 'N/A'}}</td></tr>
-            <tr style="border-bottom: 1px dashed #ccc;"><td style="padding: 5px 0; font-weight: 600;">Budget:</td><td style="padding: 5px 0;">${{submittedData.budget_min | number}}</td></tr>
-            <tr style="border-bottom: 1px dashed #ccc;"><td style="padding: 5px 0; font-weight: 600;">Urgent:</td><td style="padding: 5px 0;">{{submittedData.urgent_priority ? 'Yes' : 'No'}}</td></tr>
-        </table>
-        
-        <h4 style="margin-top: 20px; font-size: 1.1em;">Project Brief:</h4>
-        <p style="white-space: pre-wrap; margin-top: -10px; border: 1px solid #ddd; padding: 10px; background-color: #fff; border-radius: 4px;">{{submittedData.details_objective}}</p>
+            <div class="input-group">
+                <textarea id="description" required></textarea>
+                <label>Description</label>
+                <p class="error" id="descError"></p>
+            </div>
 
-        <button ng-click="clearSubmission()" style="width: 100%; background-color: #dc3545; margin-top: 20px; transition: background-color 0.2s;">
-            CLEAR SUBMITTED DATA
-        </button>
+            <button type="submit" class="btn submit-btn">Submit</button>
+            <button type="button" id="clearBtn" class="btn clear-btn">Clear</button>
+        </form>
+
+        <div id="output" class="output hidden"></div>
     </div>
 
     <script src="input.js"></script>
-    <script>
-        // Your AngularJS JavaScript will go here
-    </script>
-
 </body>
 </html>
