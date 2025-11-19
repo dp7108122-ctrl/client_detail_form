@@ -1,161 +1,93 @@
-/* ---------- GLOBAL ---------- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
+/* ----------------- Root & Reset ----------------- */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f1720; --card:rgba(255,255,255,0.06); --glass-border:rgba(255,255,255,0.06);
+  --text:#e6eef8; --muted:#9fb0c7; --accent:#00b7ff; --danger:#ff6b6b; --success:#28a745;
+  --radius:14px;
+}
+body{font-family:'Poppins',system-ui,Segoe UI; background:linear-gradient(180deg,#071013 0%, #0b1b29 100%); color:var(--text); min-height:100vh; padding:18px;}
+
+/* Topbar */
+.topbar{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto 18px;padding:8px 6px}
+.topbar h1{font-size:20px;color:var(--accent);letter-spacing:.3px}
+.icon-btn{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text);padding:6px 10px;border-radius:8px;cursor:pointer}
+
+/* Layout */
+.layout{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 360px;gap:20px}
+@media(max-width:980px){.layout{grid-template-columns:1fr;padding:0 6px}}
+
+/* Card / glass */
+.card{background:var(--card);border-radius:var(--radius);padding:18px;border:1px solid var(--glass-border);backdrop-filter:blur(8px);box-shadow:0 6px 26px rgba(0,0,0,0.45);transition:transform .22s ease}
+.card:hover{transform:translateY(-6px)}
+.form-card{min-height:420px}
+.output-card{align-self:start}
+
+/* Fields */
+.field{position:relative;margin-bottom:16px}
+.row{display:flex;gap:12px}
+@media(max-width:720px){.row{flex-direction:column}}
+.floating input,.floating textarea{width:100%;padding:14px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);font-size:14px;outline:none;transition:box-shadow .15s, border-color .15s}
+.floating input::placeholder,.floating textarea::placeholder{opacity:0}
+.floating label{position:absolute;left:12px;top:12px;color:var(--muted);pointer-events:none;transition:all .18s ease;background:transparent;padding:0 6px;font-size:13px}
+
+/* Floating label behaviour: use placeholder trick (inputs have placeholder=" ") */
+.floating input:focus + label,
+.floating textarea:focus + label,
+.floating input:not(:placeholder-shown) + label,
+.floating textarea:not(:placeholder-shown) + label {
+  transform: translateY(-18px) scale(.95);
+  top:6px; font-size:12px;color:var(--accent)
 }
 
-body {
-    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-}
+/* Phone group */
+.phone-group{display:flex;align-items:center}
+.phone-code{display:inline-flex;padding:12px 10px;border-radius:10px 0 0 10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);color:var(--muted);margin-right:-1px}
+.phone-group input{border-radius:0 10px 10px 0}
 
-/* ---------- FORM CONTAINER ---------- */
-.container {
-    width: 100%;
-    max-width: 500px;
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
-    backdrop-filter: blur(15px);
-    box-shadow: 0px 0px 25px rgba(255, 255, 255, 0.1);
-    animation: fadeIn 1s ease;
-}
+/* select */
+select{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);outline:none;font-size:14px}
 
-.title {
-    text-align: center;
-    color: white;
-    font-size: 28px;
-    margin-bottom: 25px;
-}
+/* small control */
+.small-ctrl{display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.label-top{font-weight:600;color:var(--muted);margin-bottom:8px}
 
-/* ---------- INPUT GROUP ---------- */
-.input-group {
-    position: relative;
-    margin-bottom: 22px;
-}
+/* switch */
+.switch{position:relative;width:50px;height:28px}
+.switch input{opacity:0;width:0;height:0}
+.slider{position:absolute;inset:0;border-radius:999px;background:#2b3946;transition:.18s}
+.slider:before{content:'';position:absolute;left:4px;top:4px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.18s}
+.switch input:checked + .slider{background:linear-gradient(90deg,#00c6ff,#0072ff)}
+.switch input:checked + .slider:before{transform:translateX(22px)}
 
-.input-group input,
-.input-group textarea {
-    width: 100%;
-    padding: 12px;
-    background: transparent;
-    border: none;
-    border-bottom: 2px solid #bbb;
-    color: white;
-    font-size: 16px;
-    outline: none;
-    transition: 0.3s ease;
-}
+/* hints / errors */
+.hint{font-size:13px;color:var(--muted);margin-top:6px;min-height:18px;opacity:.95}
+.hint.error{color:var(--danger)}
 
-textarea {
-    resize: none;
-    height: 80px;
-}
+/* buttons */
+.btns{display:flex;gap:10px;margin-top:6px;flex-wrap:wrap}
+.btn{padding:10px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:600;min-width:110px}
+.primary{background:linear-gradient(90deg,#00c6ff,#0072ff);color:#002028;box-shadow:0 10px 20px rgba(0,103,255,0.12)}
+.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text)}
+.danger{background:linear-gradient(90deg,#ff7b7b,#ff4757);color:#fff}
 
-.input-group label {
-    position: absolute;
-    left: 10px;
-    top: 12px;
-    color: #ddd;
-    pointer-events: none;
-    transition: 0.3s ease;
-}
+/* output */
+.output-head{display:flex;justify-content:space-between;align-items:center}
+.output-body{margin-top:10px;background:rgba(255,255,255,0.02);padding:12px;border-radius:8px}
+.info{margin:6px 0;color:var(--muted)}
+.k{font-weight:700;color:var(--text);margin-right:8px}
+.brief{white-space:pre-wrap;padding:10px;border-radius:8px;background:rgba(0,0,0,0.2);color:var(--text)}
 
-/* ---------- FLOATING LABEL EFFECT ---------- */
-.input-group input:focus ~ label,
-.input-group textarea:focus ~ label,
-.input-group input:valid ~ label,
-.input-group textarea:valid ~ label {
-    top: -14px;
-    left: 5px;
-    font-size: 12px;
-    color: #00eaff;
-}
+/* small action buttons */
+.small{padding:8px 10px;border-radius:8px;font-weight:600}
+.small.edit{background:linear-gradient(90deg,#28a745,#4ddf7a);color:#04270b}
+.small.clear{background:linear-gradient(90deg,#ff7b7b,#ff4757);color:#3a0505}
 
-/* ---------- MULTI SELECT ---------- */
-select {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    outline: none;
-    border: 2px solid #bbb;
-    background: rgba(255, 255, 255, 0.15);
-    color: white;
-    transition: 0.3s ease;
-}
+/* hidden helper */
+.hidden{display:none}
 
-.select-label {
-    color: white;
-    margin-bottom: 5px;
-    display: block;
-    font-size: 14px;
-}
+/* footer */
+.foot{text-align:center;margin-top:26px;color:var(--muted);font-size:13px}
 
-/* ---------- BUTTONS ---------- */
-.btn {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    font-size: 18px;
-    margin-top: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s ease;
-    color: white;
-}
-
-.submit-btn {
-    background: #00c9ff;
-}
-
-.submit-btn:hover {
-    background: #0099cc;
-    transform: scale(1.03);
-}
-
-.clear-btn {
-    background: #ff4e50;
-}
-
-.clear-btn:hover {
-    background: #d63436;
-    transform: scale(1.03);
-}
-
-/* ---------- ERROR MESSAGE ---------- */
-.error {
-    color: #ff4e50;
-    font-size: 12px;
-    margin-top: 3px;
-}
-
-/* ---------- OUTPUT BOX ---------- */
-.output {
-    margin-top: 25px;
-    padding: 20px;
-    background: rgba(0,0,0,0.4);
-    border-left: 5px solid #00eaff;
-    border-radius: 10px;
-    color: white;
-    animation: slideUp 0.6s ease;
-}
-
-.hidden {
-    display: none;
-}
-
-/* ---------- ANIMATIONS ---------- */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+/* animations */
+.card{animation:pop .36s ease}
+@keyframes pop{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
