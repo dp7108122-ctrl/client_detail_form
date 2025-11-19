@@ -1,61 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Client Form</title>
-    <link rel="stylesheet" href="design.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Client Inquiry Form</title>
+  <link rel="stylesheet" href="design.css" />
 </head>
-
 <body>
-    <div class="container">
-        <h2 class="title">Client Information Form</h2>
+  <div class="page">
+    <header class="topbar">
+      <h1>Client Inquiry</h1>
+      <div class="controls">
+        <button id="darkToggle" class="icon-btn" title="Toggle dark mode">🌓</button>
+      </div>
+    </header>
 
+    <main class="layout">
+      <section class="card form-card">
         <form id="clientForm" novalidate>
-            
-            <div class="input-group">
-                <input type="text" id="fullName" required>
-                <label>Full Name</label>
-                <p class="error" id="nameError"></p>
+          <!-- NAME -->
+          <div class="field floating">
+            <input id="fullName" name="fullName" type="text" placeholder=" " autocomplete="name" />
+            <label for="fullName">Client Full Name *</label>
+            <div class="hint" id="nameError" aria-live="polite"></div>
+          </div>
+
+          <!-- EMAIL -->
+          <div class="field floating">
+            <input id="email" name="email" type="email" placeholder=" " autocomplete="email" />
+            <label for="email">Business Email *</label>
+            <div class="hint" id="emailError" aria-live="polite"></div>
+          </div>
+
+          <!-- PHONE -->
+          <div class="row">
+            <div class="phone-group field">
+              <span class="phone-code">+91</span>
+              <input id="contact" name="contact" type="tel" placeholder=" " maxlength="10" />
+              <label for="contact">Contact Number *</label>
+              <div class="hint" id="contactError" aria-live="polite"></div>
             </div>
 
-            <div class="input-group">
-                <input type="email" id="email" required>
-                <label>Email</label>
-                <p class="error" id="emailError"></p>
+            <div class="small-field field small-ctrl">
+              <label class="label-top">Urgent?</label>
+              <label class="switch">
+                <input id="urgent" type="checkbox" />
+                <span class="slider"></span>
+              </label>
             </div>
+          </div>
 
-            <div class="input-group">
-                <input type="text" id="contact" required maxlength="10">
-                <label>Contact Number</label>
-                <p class="error" id="contactError"></p>
-            </div>
+          <!-- COMPANY -->
+          <div class="field floating">
+            <input id="company" name="company" type="text" placeholder=" " />
+            <label for="company">Company Name</label>
+            <div class="hint" id="companyError" aria-live="polite"></div>
+          </div>
 
-            <div class="input-group">
-                <label class="select-label">Select Skills</label>
-                <select id="skills" multiple required>
-                    <option value="HTML">HTML</option>
-                    <option value="CSS">CSS</option>
-                    <option value="JavaScript">JavaScript</option>
-                    <option value="Angular">Angular</option>
-                    <option value="Python">Python</option>
-                </select>
-                <p class="error" id="skillsError"></p>
-            </div>
+          <!-- SERVICES (multi-select) -->
+          <div class="field">
+            <label class="label-top" for="services">Required Services *</label>
+            <select id="services" multiple size="5" aria-label="Required services">
+              <option value="Website Design">Website Design & Development</option>
+              <option value="SEO">SEO & Content Marketing</option>
+              <option value="Branding">Branding & UI/UX Design</option>
+              <option value="Custom App">Custom Software / App Development</option>
+              <option value="Maintenance">Ongoing Maintenance / Support</option>
+            </select>
+            <div class="hint" id="servicesError" aria-live="polite"></div>
+          </div>
 
-            <div class="input-group">
-                <textarea id="description" required></textarea>
-                <label>Description</label>
-                <p class="error" id="descError"></p>
-            </div>
+          <!-- BUDGET -->
+          <div class="field floating">
+            <input id="budget" name="budget" type="number" placeholder=" " min="1000" step="500" />
+            <label for="budget">Target Project Budget (USD) *</label>
+            <div class="hint" id="budgetError" aria-live="polite"></div>
+          </div>
 
-            <button type="submit" class="btn submit-btn">Submit</button>
-            <button type="button" id="clearBtn" class="btn clear-btn">Clear</button>
+          <!-- DESCRIPTION -->
+          <div class="field floating">
+            <textarea id="description" name="description" placeholder=" " rows="4"></textarea>
+            <label for="description">Project Brief / Objectives *</label>
+            <div class="hint" id="descError" aria-live="polite"></div>
+          </div>
+
+          <!-- TERMS -->
+          <div class="field agree-row">
+            <label class="agree">
+              <input id="terms" type="checkbox" />
+              <span>I agree to the <a href="#" target="_blank">Terms & Conditions</a> *</span>
+            </label>
+            <div class="hint" id="termsError" aria-live="polite"></div>
+          </div>
+
+          <!-- BUTTONS -->
+          <div class="btns">
+            <button type="submit" id="submitBtn" class="btn primary">Submit Inquiry</button>
+            <button type="button" id="editBtn" class="btn ghost" disabled>✏️ Edit</button>
+            <button type="button" id="clearBtn" class="btn danger">Clear</button>
+          </div>
         </form>
+      </section>
 
-        <div id="output" class="output hidden"></div>
-    </div>
+      <aside id="outputCard" class="card output-card hidden" aria-live="polite">
+        <div class="output-head">
+          <h2>✅ Submission Successful</h2>
+          <div>
+            <button id="outEdit" class="small edit">✏️ Edit</button>
+            <button id="outClear" class="small clear">🗑 Clear</button>
+          </div>
+        </div>
 
-    <script src="input.js"></script>
+        <div id="outputContent" class="output-body"></div>
+      </aside>
+    </main>
+
+    <footer class="foot">Made with ♥ • Responsive • Animated • Dark mode</footer>
+  </div>
+
+  <script src="input.js"></script>
 </body>
 </html>
