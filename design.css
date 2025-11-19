@@ -1,226 +1,161 @@
-/* --- Add Toggle Switch Styles (Missing from original CSS) --- */
-
-/* Container for the toggle switch and label */
-.toggle-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #eee; /* Subtle separator */
-}
-
-/* The switch - the box around the slider */
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-}
-
-/* Hide default HTML checkbox */
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-/* The slider - round switch appearance */
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: var(--transition-speed);
-    border-radius: 34px;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: var(--transition-speed);
-    border-radius: 50%;
-}
-
-input:checked + .slider {
-    background-color: var(--primary-color);
-}
-
-input:focus + .slider {
-    box-shadow: 0 0 1px var(--primary-color);
-}
-
-input:checked + .slider:before {
-    transform: translateX(26px);
-}
-/* --- Global Resets and Base Styles --- */
-:root {
-    --primary-color: #007bff; /* Deep Blue for buttons/focus */
-    --secondary-color: #f0f4f8; /* Light background for form sections */
-    --border-color: #ddd;
-    --focus-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Subtle focus ring */
-    --transition-speed: 0.3s;
+/* ---------- GLOBAL ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 0 20px;
-    background-color: #ffffff; /* White background */
-    color: #333;
-}
-
-h2 {
-    font-size: 1.8em;
-    font-weight: 600;
-    margin-bottom: 5px;
-}
-
-p {
-    color: #666;
-    margin-bottom: 30px;
-}
-
-/* --- Section Headings (Contact Details, Project Scope) --- */
-h3 {
-    font-size: 1.3em;
-    font-weight: 500;
-    border-bottom: 2px solid var(--primary-color); /* Highlighted separator */
-    padding-bottom: 8px;
-    margin-top: 40px;
-    margin-bottom: 25px;
-    color: #222;
-    /* Animation: Subtle fade-in for section headings */
-    animation: fadeIn 0.8s ease-out; 
-}
-
-/* --- Labels and Inputs --- */
-label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    font-size: 0.9em;
-    color: #444;
-}
-
-input:not([type="checkbox"]):not([type="radio"]),
-select,
-textarea {
-    width: 100%;
-    padding: 14px 15px; /* Generous padding for height */
-    margin-bottom: 20px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Subtle depth */
-    box-sizing: border-box;
-    transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
-}
-
-/* Animation: Input Focus */
-input:focus, select:focus, textarea:focus {
-    border-color: var(--primary-color);
-    outline: none;
-    box-shadow: var(--focus-shadow);
-    transform: translateY(-1px); /* Subtle lift effect */
-}
-
-/* --- Phone Input Specifics --- */
-.phone-group {
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    min-height: 100vh;
     display: flex;
-    margin-bottom: 20px;
+    justify-content: center;
+    padding: 20px;
 }
 
-.phone-code {
-    padding: 14px 15px;
-    border: 1px solid var(--border-color);
-    border-right: none;
-    background-color: var(--secondary-color); /* Light grey code background */
-    border-radius: 8px 0 0 8px;
-    font-weight: 600;
-    color: #555;
-    align-self: stretch; /* Ensures height matches input */
-    line-height: 1.5; /* Matches input line height */
-}
-
-.phone-group input[type="tel"] {
-    border-radius: 0 8px 8px 0;
-    margin-bottom: 0;
-    /* Ensure phone input takes the remaining width */
-    flex-grow: 1; 
-}
-
-/* --- Project Brief Textarea --- */
-textarea {
-    min-height: 120px; /* Taller textarea for brief */
-    resize: vertical;
-}
-
-/* --- Submit Button --- */
-button[type="submit"] {
-    display: block;
+/* ---------- FORM CONTAINER ---------- */
+.container {
     width: 100%;
-    background-color: var(--primary-color);
+    max-width: 500px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0px 0px 25px rgba(255, 255, 255, 0.1);
+    animation: fadeIn 1s ease;
+}
+
+.title {
+    text-align: center;
     color: white;
-    padding: 15px;
-    font-size: 1.1em;
-    font-weight: 600;
+    font-size: 28px;
+    margin-bottom: 25px;
+}
+
+/* ---------- INPUT GROUP ---------- */
+.input-group {
+    position: relative;
+    margin-bottom: 22px;
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
     border: none;
+    border-bottom: 2px solid #bbb;
+    color: white;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s ease;
+}
+
+textarea {
+    resize: none;
+    height: 80px;
+}
+
+.input-group label {
+    position: absolute;
+    left: 10px;
+    top: 12px;
+    color: #ddd;
+    pointer-events: none;
+    transition: 0.3s ease;
+}
+
+/* ---------- FLOATING LABEL EFFECT ---------- */
+.input-group input:focus ~ label,
+.input-group textarea:focus ~ label,
+.input-group input:valid ~ label,
+.input-group textarea:valid ~ label {
+    top: -14px;
+    left: 5px;
+    font-size: 12px;
+    color: #00eaff;
+}
+
+/* ---------- MULTI SELECT ---------- */
+select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    outline: none;
+    border: 2px solid #bbb;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    transition: 0.3s ease;
+}
+
+.select-label {
+    color: white;
+    margin-bottom: 5px;
+    display: block;
+    font-size: 14px;
+}
+
+/* ---------- BUTTONS ---------- */
+.btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    font-size: 18px;
+    margin-top: 10px;
     border-radius: 8px;
     cursor: pointer;
-    margin-top: 30px;
-    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.3);
-    transition: background-color var(--transition-speed), transform 0.2s ease;
+    transition: 0.3s ease;
+    color: white;
 }
 
-/* Animation: Button Hover/Active */
-button[type="submit"]:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px); /* Lift button on hover */
-    box-shadow: 0 6px 8px rgba(0, 123, 255, 0.4);
+.submit-btn {
+    background: #00c9ff;
 }
 
-button[type="submit"]:active {
-    transform: translateY(0); /* Press down effect */
+.submit-btn:hover {
+    background: #0099cc;
+    transform: scale(1.03);
 }
 
-/* --- Multi-Select Instruction Note --- */
-small {
-    display: block;
-    color: #888;
-    font-size: 0.85em;
-    margin-top: -10px;
-    margin-bottom: 20px;
+.clear-btn {
+    background: #ff4e50;
 }
 
-/* --- Keyframe Animations --- */
+.clear-btn:hover {
+    background: #d63436;
+    transform: scale(1.03);
+}
+
+/* ---------- ERROR MESSAGE ---------- */
+.error {
+    color: #ff4e50;
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+/* ---------- OUTPUT BOX ---------- */
+.output {
+    margin-top: 25px;
+    padding: 20px;
+    background: rgba(0,0,0,0.4);
+    border-left: 5px solid #00eaff;
+    border-radius: 10px;
+    color: white;
+    animation: slideUp 0.6s ease;
+}
+
+.hidden {
+    display: none;
+}
+
+/* ---------- ANIMATIONS ---------- */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Apply fade-in to all input groups */
-.phone-group, 
-input:not([type="checkbox"]):not([type="radio"]), 
-select, 
-textarea, 
-.toggle-container {
-    animation: fadeIn 0.5s ease-out backwards;
-    /* Delay each element slightly for a staggered effect */
-    animation-delay: calc(var(--delay, 0) * 0.1s); 
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
 }
-
-/* Use a custom property for staggering the animations */
-input:nth-child(1) { --delay: 1; }
-input:nth-child(2) { --delay: 2; }
-.phone-group { --delay: 3; }
-select { --delay: 4; }
-/* ... and so on for all major form elements */
